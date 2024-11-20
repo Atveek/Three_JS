@@ -26,7 +26,7 @@ const orbit = new OrbitControls(camera, renderer.domElement);
 
 //AxesHelper is introduce for the help of 3D coordinates
 //5 represent the length of the Axes
-const axesHelper = new THREE.AxesHelper(3);
+const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
 //how to set the camera position
@@ -48,6 +48,7 @@ const boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const box = new THREE.Mesh(boxGeometry, boxMaterial);
 scene.add(box);
 
+//plane
 const planeGeometry = new THREE.PlaneGeometry(30, 30);
 const planeMaterial = new THREE.MeshBasicMaterial({
   color: 0xffffff,
@@ -57,9 +58,22 @@ const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(plane);
 plane.rotation.x = -0.5 * Math.PI;
 
+//gridHelper
 const gridHelper = new THREE.GridHelper(30);
 scene.add(gridHelper);
 
+//sphereGeometry - radius , horizontal round division ,vertical division
+const sphereGeometry = new THREE.SphereGeometry(4, 50, 50);
+const sphereMaterial = new THREE.MeshBasicMaterial({
+  color: 0x0000ff,
+  wireframe: false,
+});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+scene.add(sphere);
+
+sphere.position.set(-10, 10, 0);
+
+//animation of box
 function animate(time) {
   box.rotation.x = time / 1000;
   box.rotation.y = time / 1000;
