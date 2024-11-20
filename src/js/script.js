@@ -1,6 +1,7 @@
 import * as THREE from "three";
 //OrbitControls is use for the update the angle of the camera by mouse
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import * as dat from "dat.gui";
 
 //renderer is area where 3D element is render
 const renderer = new THREE.WebGLRenderer();
@@ -73,10 +74,31 @@ scene.add(sphere);
 
 sphere.position.set(-10, 10, 0);
 
+const gui = new dat.GUI();
+
+const options = {
+  sphereColor: "#ffea00",
+  wireframe: false,
+  speed: 0.01,
+};
+
+gui.addColor(options, "sphereColor").onChange(function (e) {
+  sphere.material.color.set(e);
+});
+gui.add(options, "wireframe").onChange(function (e) {
+  sphere.material.wireframe = e;
+});
+gui.add(options, "speed", 0.01, 0.1);
+
+let step = 0;
+
 //animation of box
 function animate(time) {
   box.rotation.x = time / 1000;
   box.rotation.y = time / 1000;
+
+  step += options.speed;
+  sphere.position.y = 20 * Math.abs(Math.sin(step));
   //add camera and scene in the canvas
   renderer.render(scene, camera);
 }
